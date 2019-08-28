@@ -3,11 +3,21 @@
 @section('content')
 
 <style type="text/css">
-	.a_options {margin-top :15px;visibility: visible} 
+	.a_options {margin-top :15px;visibility: hidden} 
 </style>
+
+<div style="margin: 10px auto">
+    <a href="{{route('job.index')}}">
+      <button type="button" class="btn btn-md btn-warning">
+        <span class="glyphicon glyphicon-chevron-left "></span>
+        Back
+      </button>
+    </a>
+</div>
+
 <form class="form-inline">
-	<div class="form-group ">
-  		<label for="sel1">Select score type :</label>
+	<div class="form-group">
+  		<label for="sel1" id="helper_score_title">Select score type :</label>
 	  	<select class="form-control" id="score_type" onchange="show_details()">
 		  	<option> Select Score Type </option>
 		    <option value="a"> A Score</option>
@@ -16,27 +26,22 @@
 		    <option value="general"> General Score</option>
 	  </select>
 	</div>
+
+	<div class="form-group" id="helper_score_type">
+	    <a href="{{route('job.create')}}">
+	      <button type="button" class="btn btn-md">
+	        Clear Score Type
+	      </button>
+    	</a>
+	</div>
 </form>
     
 
 <div class="a_options" id="a_options">
 
 	<form class="form-inline">
-	  	
 	  	<div class="form-group">
-	  		<label> Please select the quantity : </label>
-		    <select class="form-control">
-		    	<option> Select Quantity </option>
-		    	<option value="3"> 3 </option>
-		    	<option value="10"> 10 </option>
-		    	<option value="20"> 20 </option>
-		    	<option value="50"> 50 </option>
-		    	<option value="100"> 100 </option>
-		    	<option value="200"> 200 </option>
-		    </select>
-	  	</div>
-	  	&nbsp;
-	  	<div class="form-group">
+	  		<label> Please select the app_type & source : </label>
 		    <select class="form-control" id="a_app_type" onchange="a_populate_engine_name()">
 		    	<option value=""> Select Application Type </option>
 		    	@if(isset($data['application_type']) && count($data['application_type']) > 0)
@@ -58,7 +63,23 @@
 		    </select>
 	  	</div>
 	  	&nbsp;
-	  	<div class="form-group">
+
+	  	<br/> <br/> 
+
+	  	<div class="form-group last_options" >
+		    <select class="form-control">
+		    	<option> Select Quantity </option>
+		    	<option value="3"> 3 </option>
+		    	<option value="10"> 10 </option>
+		    	<option value="20"> 20 </option>
+		    	<option value="50"> 50 </option>
+		    	<option value="100"> 100 </option>
+		    	<option value="200"> 200 </option>
+		    </select>
+	  	</div>
+	  	&nbsp;
+	  	
+	  	<div class="form-group last_options">
 		    <select class="form-control">
 		    	<option> Select User Distribution </option>
 		    	<option value="asc"> Ascending </option>
@@ -66,10 +87,9 @@
 		    	<option value="rand"> Random </option>
 		    </select>
 	  	</div>
+	  	&nbsp;
 
-
-	  	<br/> <br/> 
-	  	<div class="form-group">
+	  	<div class="form-group last_options">
 		    <select class="form-control">
 		    	<option> Select Runner </option>
 		    	<option value="asc"> Direct Runner </option>
@@ -78,13 +98,12 @@
 	  	</div>
 
 
-	  	<div class="checkbox">
+	  	<div class="checkbox last_options">
 	    	<label><input type="checkbox"> Notify me </label>
 	  	</div>
-	  	<button type="submit" class="btn btn-default">Submit</button>
 	</form>
 
-	<table class="table table-striped table-bordered table-responsive">
+	<table class="table table-striped table-bordered table-responsive adjust_last_options">
 		<thead>
 	      <tr>
 	        <th> No </th>
@@ -95,14 +114,22 @@
 	      </tr>
     	</thead>
     	<tbody id="tbody_a_engine_name">
-    		
+    		<tr class="disable">
+    			<td colspan="10">
+    			</td>
+    		</tr>
     	</tbody>
 	</table>
+
+	<div class="btn btn-block btn-primary last_options">
+		Submit Job 
+	</div>
 </div>
 
 
 <script type="text/javascript">
-
+	$('#helper_score_type').hide();
+	$(".last_options").hide();
 	$.ajaxSetup({
     	headers: {
       		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -121,7 +148,6 @@
 
 
 	function a_populate_engine_name() {
-		$('#tbody_a_engine_name').empty();
 		a_app_type = $('#a_app_type').val();
 		a_source = $('#a_source').val();
 
@@ -133,7 +159,7 @@
 			return
 		} 
 
-
+		$('#tbody_a_engine_name').empty();
 		var payload = {"a_app_type":a_app_type,"a_source":a_source};
 
 		$.ajax({
@@ -159,14 +185,20 @@
 									val.model_decider +
 									"</td>" +
 									"<td>" +
-									val.model_decider +
+									"<button class='btn btn-success btn-block'> pick engine "+ val.engine_id +" </button>" +
 									"</td>" +
 									"</tr>";
+						$('#score_type').attr('disabled',true);
+						$('#helper_score_type').show();
+						$('#helper_score_title').hide();
+						$('.last_options').show();
+						$('.adjust_last_options').css('margin-top','10px');
 						$('#tbody_a_engine_name').append(append_rows);
 					});
 				} else {
 					append_rows = "<tr> <td colspan=10 class='text-danger'>"+response.messages+"</td> </tr>";
 					$('#tbody_a_engine_name').append(append_rows);
+					$(".last_options").hide();
 				}
 			},
 			error: function( jqXhr, textStatus, errorThrown ){

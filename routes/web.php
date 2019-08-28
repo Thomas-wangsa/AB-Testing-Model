@@ -21,7 +21,7 @@ Route::get('/logout',function(){
     return redirect('/login');
 });
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('/compare-model', 'CompareModelController');
+Route::resource('/job', 'JobController');
 
 
-Route::post('/ajax/a/get_engine_name', 'CompareModelController@getEngineNameByDataForA')->name('getEngineNameByDataForA');
+Route::post('/ajax/a/get_engine_name', 'JobController@getEngineNameByDataForA')->name('getEngineNameByDataForA');

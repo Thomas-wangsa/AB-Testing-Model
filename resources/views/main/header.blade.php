@@ -21,13 +21,13 @@
             
             <li>
               <a href="">
-                AB Testing
+                Admin
               </a>
             </li>
 
             <li>
               <a href="">
-                BackDate Model
+                Job
               </a>
             </li>
 

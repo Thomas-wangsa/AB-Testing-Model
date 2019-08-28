@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Models\AScoreModelSummary;
-class CompareModelController extends Controller
+
+
+class JobController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,9 +15,6 @@ class CompareModelController extends Controller
      */
     public function index()
     {
-        // $query = DB::table('users')->select('name');
-
-        // $users = $query->addSelect('age')->get();
         $data = array(
             "application_type"=>array(),
             "source_of_registration"=>array()
@@ -29,7 +28,7 @@ class CompareModelController extends Controller
         }
         
 
-        return view('compare-model/index',compact('data'));
+        return view('job/index',compact('data'));
     }
 
     /**
@@ -52,7 +51,7 @@ class CompareModelController extends Controller
         }
         
 
-        return view('compare-model/index',compact('data'));
+        return view('job/create',compact('data'));
     }
 
     /**
@@ -111,13 +110,13 @@ class CompareModelController extends Controller
         //
     }
 
-
     public function getEngineNameByDataForA(Request $request) {
         $response = ["error"=>True,"messages"=>NULL,"data"=>NULL];
 
         try {
             $data = AScoreModelSummary::where('application_type',$request->a_app_type)
                 ->where('source_of_registration',$request->a_source)
+                ->orderBy('start_date')
                 ->get();
 
             if(count($data) < 1 ) {

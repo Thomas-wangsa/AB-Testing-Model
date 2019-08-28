@@ -2,8 +2,8 @@
   <h4>Finaccel</h4>
   <ul class="nav nav-pills nav-stacked">
     <li class="active"><a href="{{route('home')}}">Home</a></li>
-    <li><a href="">AB Testing</a></li>
-    <li><a href="">BackDate</a></li>
+    <li><a href="">Admin</a></li>
+    <li><a href="">Job</a></li>
     <li><a href="#section3">Data</a></li>
   </ul><br>
   <div class="input-group">

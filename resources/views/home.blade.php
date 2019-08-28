@@ -17,14 +17,14 @@
 
     <div class="col-md-3">
       <div class="thumbnail">
-        <a href="{{route('compare-model.index')}}">
+        <a href="{{route('job.index')}}">
 
           <div class="icon_block">
                 <span class="glyphicon glyphicon-file ">
                 </span> &nbsp;
           </div>
           <div class="caption text-center">
-            <p> Compare-Model </p>
+            <p> Job </p>
           </div>
         </a>
       </div>
