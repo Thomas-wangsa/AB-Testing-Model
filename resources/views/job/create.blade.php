@@ -122,7 +122,7 @@
 	</table>
 
 	<div class="btn btn-block btn-primary last_options">
-		Submit Job 
+		Create Job 
 	</div>
 </div>
 
@@ -146,6 +146,11 @@
 		}
 	}
 
+	function select_model(id) {
+		//$('#model_id_'+id).attr('disabled',true);
+		$("#model_id_"+id).prop('disabled', true);
+		alert('aaa');
+	}
 
 	function a_populate_engine_name() {
 		a_app_type = $('#a_app_type').val();
@@ -185,7 +190,12 @@
 									val.model_decider +
 									"</td>" +
 									"<td>" +
-									"<button class='btn btn-success btn-block'> pick engine "+ val.engine_id +" </button>" +
+									"<button "+
+									"class='btn btn-success btn-block' "+
+									"id='model_id_"+val.id+"' "+ 
+									"onclick='select_model("+val.id+")'>" +
+									"pick engine "+ val.engine_id +
+									" </button>" +
 									"</td>" +
 									"</tr>";
 						$('#score_type').attr('disabled',true);
@@ -196,6 +206,7 @@
 						$('#tbody_a_engine_name').append(append_rows);
 					});
 				} else {
+					$('.adjust_last_options').css('margin-top','');
 					append_rows = "<tr> <td colspan=10 class='text-danger'>"+response.messages+"</td> </tr>";
 					$('#tbody_a_engine_name').append(append_rows);
 					$(".last_options").hide();

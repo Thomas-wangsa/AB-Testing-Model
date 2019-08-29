@@ -72,8 +72,9 @@ class JobController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
+    {   
+        $data = array();
+        return view('job/show',compact('data'));
     }
 
     /**
@@ -116,7 +117,7 @@ class JobController extends Controller
         try {
             $data = AScoreModelSummary::where('application_type',$request->a_app_type)
                 ->where('source_of_registration',$request->a_source)
-                ->orderBy('start_date')
+                ->orderBy('id','desc')
                 ->get();
 
             if(count($data) < 1 ) {
